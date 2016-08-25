@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="blocitoff">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Handy To-Do List</title>
+    <!-- <link rel="stylesheet" href="/styles/style.css"> -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>To Do List - inactive</h1>
+        <div id="task-list">
+          <div ng-controller="TasksController">
+            <div class="form-group">
+              <label for="taskDescription">Description</label>
+              <input type="text" class="form-control" id="taskName" ng-model="taskName" placeholder="Add your task here">  
+            </div>
+            <div class="form-group">
+              <button ng-click="editTask()">EDIT</button>
+            </div>
+            <ul>
+              <li ng-repeat="task in tasks" ng-hide="!task.completed || isLessThanSevenDays(task)" ng-show="task.completed || isOlderThanSevenDays(task)">
+                <input type="checkbox" ng-model="task.completed" ng-change="updateTask(task)">
+                {{task.name}} | <small>created {{ getDuration(task) }} ago</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+    <script src="https://cdn.rawgit.com/angular-ui/ui-router/0.2.18/release/angular-ui-router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/blocitoff.js"></script>
+</body>
+</html>
+

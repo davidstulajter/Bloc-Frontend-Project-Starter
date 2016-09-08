@@ -28,5 +28,30 @@ angular.module('blocitoff').controller('TasksController', function ($scope, $fir
   $scope.updateTask = function(task) {
     console.log(task);
     $scope.tasks.$save(task);
-  }
+  };
+
+  $scope.getDuration = function(task) {
+    var now = moment();
+    var dateCreated = moment(task.timeCreated);
+    var duration = moment.duration(now.diff(dateCreated));
+    return duration.humanize();
+  };
+
+  $scope.isOlderThanSevenDays = function(task) {
+    var now = moment();
+    var dateCreated = moment(task.timeCreated);
+    var duration = moment.duration(now.diff(dateCreated));
+    console.log(duration.humanize());
+    var daysOld = duration.days();
+    return daysOld > 7;
+  };
+  
+  $scope.isLessThanSevenDays = function(task) {
+    var now = moment();
+    var dateCreated = moment(task.timeCreated);
+    var duration = moment.duration(now.diff(dateCreated));
+    console.log(duration.humanize());
+    var daysOld = duration.days();
+    return daysOld < 7;
+  };
 });

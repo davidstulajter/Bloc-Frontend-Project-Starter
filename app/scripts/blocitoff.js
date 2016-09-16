@@ -11,16 +11,30 @@ angular.module('blocitoff').controller('TasksController', function ($scope, $fir
 
   
   $scope.taskName = "";
+  $scope.taskPriority = "1";
   
-  
+  $scope.getPriorityString = function(num) {
+    var priority = "";
+    if (num === 1) {
+      priority = "Low";
+    } else if (num === 2) {
+      priority = "Medium";
+    } else {
+      priority = "High";
+    }
+    return priority;
+  };
+
   $scope.addTask = function () {
   
-    $scope.tasks.$add({
+    var newTask = {
       name: $scope.taskName,
-      //priority: $scope.priority,
+      priority: Number($scope.taskPriority),
       completed: false,
       timeCreated: Firebase.ServerValue.TIMESTAMP
-    }).then(function(ref) {
+    };
+
+    $scope.tasks.$add(newTask).then(function(ref) {
       $scope.taskName = "";
     });
   };
@@ -28,6 +42,10 @@ angular.module('blocitoff').controller('TasksController', function ($scope, $fir
   $scope.updateTask = function(task) {
     console.log(task);
     $scope.tasks.$save(task);
+  };
+
+  $scope.deleteTask = function(task) {
+    $scope.tasks.$remove(task);
   };
 
   $scope.getDuration = function(task) {

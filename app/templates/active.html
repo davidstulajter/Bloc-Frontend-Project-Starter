@@ -18,15 +18,20 @@
           <div ng-controller="TasksController">
             <div class="form-group">
               <label for="taskDescription">Description</label>
-              <input type="text" class="form-control" id="taskName" ng-model="taskName" placeholder="Add your task here">  
+              <input type="text" id="taskName" ng-model="taskName" placeholder="Add your task here">
+              <select ng-model="taskPriority">
+                <option value="1">Low</option>
+                <option value="2">Medium</option>
+                <option value="3">High</option>
+              </select>
             </div>
             <div class="form-group">
               <button ng-click="addTask()">ADD</button>
             </div>
             <ul>
-              <li ng-repeat="task in tasks" ng-hide="task.completed || isOlderThanSevenDays(task)" ng-show="!task.completed || isLessThanSevenDays(task)">
+              <li ng-repeat="task in tasks | orderBy : '-priority'" ng-hide="task.completed || isOlderThanSevenDays(task)" ng-show="!task.completed || isLessThanSevenDays(task)">
                 <input type="checkbox" ng-model="task.completed" ng-change="updateTask(task)">
-                {{task.name}} | <small>created {{ getDuration(task) }} ago</small>
+                {{task.name}} | {{getPriorityString(task.priority)}} | <small>created {{ getDuration(task) }} ago</small>
               </li>
             </ul>
           </div>

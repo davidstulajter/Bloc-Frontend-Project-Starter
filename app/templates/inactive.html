@@ -18,15 +18,16 @@
           <div ng-controller="TasksController">
             <div class="form-group">
               <label for="taskDescription">Description</label>
-              <input type="text" class="form-control" id="taskName" ng-model="taskName" placeholder="Add your task here">  
+              <input type="text" id="taskName" ng-model="taskName" placeholder="Add your task here">  
             </div>
             <div class="form-group">
               <button ng-click="editTask()">EDIT</button>
             </div>
             <ul>
-              <li ng-repeat="task in tasks" ng-hide="!task.completed || isLessThanSevenDays(task)" ng-show="task.completed || isOlderThanSevenDays(task)">
+              <li ng-repeat="task in tasks" ng-show="task.completed || isOlderThanSevenDays(task)">
                 <input type="checkbox" ng-model="task.completed" ng-change="updateTask(task)">
                 {{task.name}} | <small>created {{ getDuration(task) }} ago</small>
+                <button ng-click="deleteTask(task)">Delete</button>
               </li>
             </ul>
           </div>
